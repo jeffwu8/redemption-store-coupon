@@ -42,7 +42,7 @@ app.get("/coupons/:code", (request, response) => {
     "SELECT * FROM coupon where code = ?",
     [request.params.code],
     (error, results) => {
-      if (error) {
+      if (error || results.length == 0) {
         response.status(404);
         response.send();
       } else {
@@ -72,7 +72,7 @@ app.post("/coupons", (request, response) => {
     "INSERT INTO coupon (code, expiration_date, discount) VALUES (?, ?, ?)", 
     [request.body.code, request.body.expiration_date, request.body.discount],
     (error, results) => {
-      if (error) {
+      if (error || results.affectedRows == 0) {
         response.status(400);
         response.send();
       } else {
