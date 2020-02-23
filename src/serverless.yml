@@ -1,0 +1,31 @@
+service: coupon-api
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: us-east-1
+  memorySize: 768
+
+functions:
+  coupon-api:
+    handler: index.handler
+    events:
+      - http:
+          path: coupons
+          method: get
+      - http:
+          path: coupons/{code}
+          method: get
+      - http:
+          path: coupons
+          method: post
+      - http:
+          path: coupons/{code}
+          method: put
+      - http:
+          path: coupons/{code}
+          method: delete
+
+plugins:
+  - serverless-offline
